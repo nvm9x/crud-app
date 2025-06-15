@@ -53,10 +53,10 @@ public class UserController {
         return userService.update(id, user);
     }
 
-    @GetMapping("/{userId")
-    public void likedPosts(@PathVariable int userId,@PathVariable int postId){
-         userService.addlikedPosts(userId,postId);
-    }
+//    @GetMapping("/{userId}")
+//    public void likedPosts(@PathVariable int userId,@PathVariable int postId){
+//         userService.addlikedPosts(userId,postId);
+//    }
 
 
 }

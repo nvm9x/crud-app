@@ -19,5 +19,5 @@ public class User {
     @Email(message = "Почта пользователя должна быть в формате \"user@mail.com\"")
     private String email;
 
-    private Set<Integer> likedPosts = new HashSet<>();
+
 }

@@ -70,6 +70,25 @@ public class PostRepository {
         }
 
     }
+
+    public List<Post> getLikedPost(int userId){
+        List<Post> likedPosts = new ArrayList<>();
+        for(Post p:posts){
+            if(p.getLikedUserIds().contains(userId)){
+                likedPosts.add(p);
+
+            }
+        }
+        return likedPosts;
+    }
+
+    public void deleteLike(int userId,int postId){
+        for(Post p:posts){
+            if(p.getId().equals(postId)){
+                p.getLikedUserIds().remove(userId);
+            }
+        }
+    }
     }
 
 

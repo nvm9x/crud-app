@@ -49,9 +49,27 @@ public class PostService {
     }
 
     public void addLike(int userId, int postId){
+
+        if(userRepository.findById(userId).isEmpty()){
+            throw new NotFoundException("Такого пользователя не существует");
+        }
+
         postRepository.addLikes(userId,postId);
-        userRepository.addlikedPosts(userId,postId);
     }
+
+    public List<Post> getLikedPosts(int userId){
+        //нужно чтобы несуществующий юзер не мог лайнуть пост
+        if(userRepository.findById(userId).isEmpty()){
+            throw new NotFoundException("Такого пользователя не существует");
+        }
+        return postRepository.getLikedPost(userId);
+    }
+
+    public void deleteLike(int userId,int postId){
+        postRepository.deleteLike(userId,postId);
+    }
+
+
 
 
 }

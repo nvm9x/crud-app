@@ -75,11 +75,7 @@ public class UserService {
         return userFound;
     }
 
-    public void addlikedPosts(int postId,int userId){
-        userRepository.addlikedPosts(postId,userId);
 
-
-    }
 
 
 

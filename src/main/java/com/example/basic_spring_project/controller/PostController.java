@@ -13,6 +13,8 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
 
+
+
     private final PostService postService;
 
 
@@ -41,8 +43,19 @@ public class PostController {
         return postService.update(id,post);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/{postId}/likes/{userId}")
     public void addLike(@PathVariable int userId, @PathVariable int postId) {
          postService.addLike(userId,postId);
+    }
+
+    @GetMapping("/liked-posts")
+    public List<Post> getLikedPosts(@RequestParam int userId) {
+        return postService.getLikedPosts(userId);
+
+    }
+
+    @DeleteMapping("/{postId}/likes/{userId}")
+    public void deleteLike(@PathVariable int userId, @PathVariable int postId) {
+         postService.deleteLike(userId,postId);
     }
 }

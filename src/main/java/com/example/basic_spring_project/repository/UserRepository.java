@@ -47,18 +47,9 @@ public class UserRepository {
         users.remove(userToDelete);
     }
 
-    public void addlikedPosts(int postId,int userId){
-        User user=null;
-        for(User u:users){
-            if(u.getId()==userId){
-                user=u;
-                break;
-            }
-        }
-        user.getLikedPosts().add(postId);
 
 
     }
 
 
-}
+
