@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,13 +15,38 @@ public class PostRepository {
 
     private List<Post> posts = new ArrayList<>();
     private int nextId;
-    public List<Post> getAllPosts(Integer authorId){
+    public List<Post> getAllPosts(Integer authorId, String sortBy,String direction){
+        List<Post> sortedPosts = new ArrayList<>();
         if (authorId!=null){
-          return posts.stream()
-                    .filter(post -> post.getAuthorId().equals(authorId))
-                    .toList();
+            for(Post p:posts){
+                if(p.getAuthorId().equals(authorId)){
+                    sortedPosts.add(p);
+                }
+            }
+
+
+
+        } if("likes".equalsIgnoreCase(sortBy)){
+            sortedPosts.sort(new Comparator<Post>() {
+                @Override
+                public int compare(Post o1, Post o2) {
+                    int result=  Integer.compare(o1.getLikedUserIds().size(),o2.getLikedUserIds().size());
+
+                    return "asc".equalsIgnoreCase(direction) ? result : -result;
+                }
+            });
+
+        } else if ("date".equalsIgnoreCase(sortBy)) {
+            sortedPosts.sort(new Comparator<Post>() {
+                @Override
+                public int compare(Post o1, Post o2) {
+                    int result= o1.getCreatedAt().compareTo(o2.getCreatedAt());
+                    return "asc".equalsIgnoreCase(direction) ? result : -result;
+                }
+            });
+
         }
-        return posts;
+        return sortedPosts;
     }
 
     public Post create(Post post){

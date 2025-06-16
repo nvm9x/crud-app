@@ -19,8 +19,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public List<Post> getAllPosts(Integer authorId){
-      return postRepository.getAllPosts(authorId);
+    public List<Post> getAllPosts(Integer authorId, String sortBy,String direction){
+      return postRepository.getAllPosts(authorId,sortBy,direction);
     }
     public Post create(Post post){
         //при создании поста проверить существует ли автор

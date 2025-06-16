@@ -19,8 +19,10 @@ public class PostController {
 
 
     @GetMapping
-    public List<Post> getAllPosts(@RequestParam(required = false)Integer authorId){
-        return postService.getAllPosts(authorId);
+    public List<Post> getAllPosts(@RequestParam(required = false)Integer authorId,
+                                  @RequestParam(required = false) String sortBy,
+    @RequestParam (required=false) String direction){
+        return postService.getAllPosts(authorId,sortBy,direction);
     }
 
     @PostMapping
