@@ -19,15 +19,17 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public List<Post> getAllPosts(Integer authorId, String sortBy,String direction){
-      return postRepository.getAllPosts(authorId,sortBy,direction);
+    public List<Post> getAllPosts(/*Integer authorId, String sortBy,String direction*/
+    LocalDateTime start, LocalDateTime end){
+     return postRepository.findByCreatedAtBetween(start,end);
+
     }
     public Post create(Post post){
         //при создании поста проверить существует ли автор
-       userRepository.findById(post.getAuthorId()).orElseThrow(()-> new NotFoundException("Автор не найден"));
+       userRepository.findById(post.getAuthor().getId()).orElseThrow(()-> new NotFoundException("Автор не найден"));
 
         post.setCreatedAt(LocalDateTime.now());
-        return postRepository.create(post);
+        return postRepository.save(post);
     }
 
     public Post findById(int id){
@@ -37,7 +39,7 @@ public class PostService {
     }
 
     public void deletePost(int id){
-     postRepository.deletePost(id);
+     postRepository.deleteById(id);
     }
 
     public Post update(int id, Post post){
@@ -50,24 +52,25 @@ public class PostService {
 
     public void addLike(int userId, int postId){
 
-        if(userRepository.findById(userId).isEmpty()){
-            throw new NotFoundException("Такого пользователя не существует");
-        }
-
-        postRepository.addLikes(userId,postId);
+//        if(userRepository.findById(userId).isEmpty()){
+//            throw new NotFoundException("Такого пользователя не существует");
+//        }
+//
+//        postRepository.addLikes(userId,postId);
     }
 
     public List<Post> getLikedPosts(int userId){
         //нужно чтобы несуществующий юзер не мог лайнуть пост
-        if(userRepository.findById(userId).isEmpty()){
-            throw new NotFoundException("Такого пользователя не существует");
-        }
-        return postRepository.getLikedPost(userId);
+//        if(userRepository.findById(userId).isEmpty()){
+//            throw new NotFoundException("Такого пользователя не существует");
+//        }
+//        return postRepository.getLikedPost(userId);
+        return null;
     }
 
-    public void deleteLike(int userId,int postId){
-        postRepository.deleteLike(userId,postId);
-    }
+  public void deleteLike(int userId,int postId){
+//        postRepository.deleteLike(userId,postId);
+   }
 
 
 

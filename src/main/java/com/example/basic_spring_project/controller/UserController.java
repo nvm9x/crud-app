@@ -26,9 +26,9 @@ public class UserController {
 
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(@RequestParam (required = false) List<Integer> userIds) {
 
-        return userService.getAllUsers();
+        return userService.getAllUsers(userIds);
     }
     //CRUD приложение
     //create,read,update,delete

@@ -24,8 +24,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-    public List<User> getAllUsers(){
-      return userRepository.getAllUsers();
+    public List<User> getAllUsers(List<Integer> userIds){
+        if(userIds==null){
+           return userRepository.findAll();
+        } else {
+            return userRepository.findByIdIn(userIds);
+        }
     }
     //CRUD
     //create,read,update,delete
@@ -34,14 +38,11 @@ public class UserService {
     public User create(User user){
 
         //Проверка если почта занята выбрасываем исключение
-       Optional<User> optional=  userRepository.getAllUsers()
-        .stream()
-                        .filter(u -> u.getEmail().equals(user.getEmail()))
-                                .findFirst();
+       Optional<User> optional=  userRepository.findByEmail(user.getEmail());
        if(optional.isPresent()){
            throw new ConflictException("Почта занята");
        }
-     return userRepository.create(user);
+     return userRepository.save(user);
     }
 
     public User findById(int id){
@@ -56,8 +57,8 @@ public class UserService {
 
 
     public void deleteUser(int id){
-    postRepository.deleteByAuthorId(id);
-      userRepository.deleteUser(id);
+//    postRepository.deleteByAuthorId(id);
+//      userRepository.deleteUser(id);
     }
 
     public User update(int id, User user){
